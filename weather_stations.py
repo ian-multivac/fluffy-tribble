@@ -238,7 +238,7 @@ if 'conditions' not in st.session_state:
     st.session_state.conditions = pd.DataFrame()
     
 conditions_output_box = st.subheader('Current Conditions')
-conditions_output_df = st.dataframe(st.session_state.conditions)
+conditions_output_df = st.dataframe(st.session_state.conditions, use_container_width=True)
 
 if 'history' not in st.session_state:
     st.session_state.history = pd.DataFrame()
@@ -264,7 +264,7 @@ col3.text(st.session_state.stn_location)
 
 st.warning('Use the Refresh Data button on the sidebar to update this section.  Displays daily historical data closest to your chosen station.', icon='⚠️')
 
-history_output_df = st.dataframe(st.session_state.history)
+history_output_df = st.dataframe(st.session_state.history, use_container_width=True)
 
 st.sidebar.button('Refresh Data',
                   on_click=update_displays(station),
