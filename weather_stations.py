@@ -165,7 +165,7 @@ col1, col2, col3 = st.columns(3)
 
 if 'stn_name' not in st.session_state:
     st.session_state.stn_name = ''
-if 'stn_identifer' not in st.session_state:
+if 'stn_identifier' not in st.session_state:
     st.session_state.stn_identifier = ''
 if 'stn_location' not in st.session_state:
     st.session_state.stn_location = ''
@@ -185,10 +185,6 @@ history_output_df = st.dataframe(st.session_state.history)
 st.sidebar.button('Refresh Data',
                   on_click=update_displays(station),
                   )
-
-# st.sidebar.button('Get historical conditions',
-#                   on_click=display_historical(station),
-#                   )
 
 
 
