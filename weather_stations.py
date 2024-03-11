@@ -88,8 +88,10 @@ def choose_historical_station_id(df):
     # filter only those that have daily data
     selected_stations = df[df['daily_data_end'] == dt.datetime.strftime((dt.datetime.today() - dt.timedelta(days=1)), format='%Y-%m-%d')]
     selected_stations = selected_stations.sort_values(by='proximity', ascending=True)
-    selected_station = selected_stations['id'].iloc[0]
-    
+    try:
+        selected_station = selected_stations['id'].iloc[0]
+    except IndexError:
+        return pd.DataFrame({'id': 1234, 'proximity': 1234, 'prov': 'AB', 'hlyRange':'|', 'dlyRange':'|', 'mlyRange':'|'})
     return selected_station
 
     
@@ -187,13 +189,15 @@ def get_historical_data(station_id):
         station_id (int): The historical station ID as provided by lookup_stations
 
     Returns:
-        _type_: _description_
+        dict, df: metadata about the station, and a dataframe that contains the historical weather information
     """
+
     ec_en_csv = ECHistorical(station_id=station_id, year=2024, language='english', format='csv')
     asyncio.run(ec_en_csv.update())
-    
+
     metadata = ec_en_csv.metadata
     df = pd.read_csv(ec_en_csv.station_data)
+
     
     return metadata, df
     
